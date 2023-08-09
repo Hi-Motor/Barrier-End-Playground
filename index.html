@@ -33,15 +33,15 @@
         var E= new Point2D(full_screen_x/2, unit_y);
         var D= new Point2D(full_screen_x-unit_x, full_screen_y-unit_y);
         function updateVariable() {
-            document.getElementById("p1").innerText = "P1: (0,"+
-                ((cubicPoints[1].y-C.y)/(E.y-C.y)).toFixed(2)+")";
-            document.getElementById("p2").innerText = "P2: ("+
-                (1-(cubicPoints[2].x-C.x)/(E.x-C.x)).toFixed(2)+",1)";
-            document.getElementById("p3").innerText = "P3: ("+
-                ((cubicPoints[4].x-C.x)/(E.x-C.x)-1).toFixed(2)+",1)";
-            document.getElementById("p4").innerText = "P4: (2,"+
-            ((cubicPoints[5].y-C.y)/(E.y-C.y)).toFixed(2)+")";
-            document.getElementById("theta").innerText = "Theta: "+theta.toFixed(0)+"deg";
+            document.getElementById("p1").innerText = "P1: ( 0.00 , "+
+                ((cubicPoints[1].y-C.y)/(E.y-C.y)).toFixed(2)+" )";
+            document.getElementById("p2").innerText = "P2: ( "+
+                (1-(cubicPoints[2].x-C.x)/(E.x-C.x)).toFixed(2)+" , 1.00 )";
+            document.getElementById("p3").innerText = "P3: ( "+
+                ((cubicPoints[4].x-C.x)/(E.x-C.x)-1).toFixed(2)+" , 1.00 )";
+            document.getElementById("p4").innerText = "P4: ( 2.00 , "+
+                ((cubicPoints[5].y-C.y)/(E.y-C.y)).toFixed(2)+" )";
+            document.getElementById("theta").innerText = "Theta: "+theta.toFixed(0)+" deg";
         }
 
         function cubicDraw() {
