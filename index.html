@@ -41,7 +41,7 @@
                 ((cubicPoints[4].x-C.x)/(E.x-C.x)-1).toFixed(2)+",1)";
             document.getElementById("p4").innerText = "P4: (2,"+
             ((cubicPoints[5].y-C.y)/(E.y-C.y)).toFixed(2)+")";
-            document.getElementById("theta").innerText = "Theta: "+theta.toFixed(0);
+            document.getElementById("theta").innerText = "Theta: "+theta.toFixed(0)+"deg";
         }
 
         function cubicDraw() {
@@ -89,7 +89,7 @@
                 disk(cubicGraphics, C.x, C.y, 3)
                 cubicGraphics.fillText("E(1,1)", E.x+5, E.y-5);
                 disk(cubicGraphics, E.x, E.y, 3)
-                cubicGraphics.fillText("D(1,1)", D.x+5, D.y+5);
+                cubicGraphics.fillText("D(2,0)", D.x+5, D.y+5);
                 disk(cubicGraphics, D.x, D.y, 3)
                 cubicGraphics.font = "20px Arial";
                 cubicGraphics.fillStyle = "green";
