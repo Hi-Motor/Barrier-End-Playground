@@ -220,10 +220,14 @@
                     cubicPoints[5].x=D.x;
                     if (dragPointIndex == 2) {
                         cubicPoints[4].y = cubicPoints[3].y +k*(cubicPoints[4].x- cubicPoints[3].x);
-
                     }
                     else if (dragPointIndex == 4) {
                         cubicPoints[2].y = cubicPoints[3].y +k*(cubicPoints[2].x- cubicPoints[3].x);
+                    }
+		    else if (dragPointIndex == 3) {
+			var rate =  (cubicPoints[3].y-C.y)/(E.y-C.y)
+                        cubicPoints[1].y = C.y +rate*(cubicPoints[1].y- C.y);                        
+			cubicPoints[5].y = D.y +rate*(cubicPoints[5].y- D.y);
                     }
                 }
                 if (lockSelect.checked) {
