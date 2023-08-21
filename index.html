@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <!-- <meta http-equiv="refresh" content="1"> -->
-    <title>Hi-Motor Bezier Curve</title>
+    <title>Hi-Motor B-Spline playground </title>
     <script type="text/javascript">
         "use strict";
         var cubicCanvas;
@@ -194,6 +194,9 @@
             if (!draggingCubic) {
                 return;
             }
+            if (dragPointIndex == 0 || dragPointIndex == numCubicPoints-1) {
+                return;
+            }
             var r = cubicCanvas.getBoundingClientRect();
             var x = Math.round(evt.clientX - r.left);
             var y = Math.round(evt.clientY - r.top);
@@ -375,12 +378,12 @@
         <hr>
     <![endif]-->
 
-    <h1><a href="https://hi-motor.site">Hi-Motor</a> Bezier Curve Playground</h1>
+    <h1><a href="https://hi-motor.site">Hi-Motor</a> B-Spline Playground</h1>
     
     <p><br/></p>
 
-    <p>Hi-Motor Bezier Curve Playground is for designers and developers exploring 
-        the potential of bezier curve in motor barrier design.<br>
+    <p>Hi-Motor B-Spline Playground is for designers and developers exploring 
+        the potential of B-Spline in motor barrier design.<br>
         
         Each segment is defined by its two endpoints and two control points.
         A control point determines the tangent at the corresponding endpoint. 
