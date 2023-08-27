@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <!-- <meta http-equiv="refresh" content="1"> -->
-    <title>Hi-Motor Bezier Curve</title>
+    <title>Hi-Motor Barrier End playground </title>
     <script type="text/javascript">
         "use strict";
         var cubicCanvas;
@@ -199,6 +199,9 @@
             if (!draggingCubic) {
                 return;
             }
+            if (dragPointIndex == 0 || dragPointIndex == numCubicPoints-1) {
+                return;
+            }
             var r = cubicCanvas.getBoundingClientRect();
             var x = Math.round(evt.clientX - r.left);
             var y = Math.round(evt.clientY - r.top);
@@ -225,11 +228,15 @@
                     cubicPoints[5].x=D.x;
                     if (dragPointIndex == 2) {
                         cubicPoints[4].y = cubicPoints[3].y +k*(cubicPoints[4].x- cubicPoints[3].x);
-
                     }
                     else if (dragPointIndex == 4) {
                         cubicPoints[2].y = cubicPoints[3].y +k*(cubicPoints[2].x- cubicPoints[3].x);
                     }
+		   // else if (dragPointIndex == 3) {
+			// var rate =  (cubicPoints[3].y-C.y)/(E.y-C.y)
+                        // cubicPoints[1].y = C.y +rate*(cubicPoints[1].y- C.y);                        
+			// cubicPoints[5].y = D.y +rate*(cubicPoints[5].y- D.y);
+                   // }
                 }
                 if (lockSelect.checked) {
                     if (dragPointIndex == 2) {
@@ -380,12 +387,12 @@
         <hr>
     <![endif]-->
 
-    <h1><a href="https://hi-motor.site">Hi-Motor</a> Bezier Curve Playground</h1>
+    <h1><a href="https://hi-motor.site">Hi-Motor</a> Barrier End Playground</h1>
     
     <p><br/></p>
 
-    <p>Hi-Motor Bezier Curve Playground is for designers and developers exploring 
-        the potential of bezier curve in motor barrier design.<br>
+    <p>Hi-Motor Barrier End Playground is for designers and developers exploring 
+        the potential of B-Spline in motor barrier design.<br>
         
         Each segment is defined by its two endpoints and two control points.
         A control point determines the tangent at the corresponding endpoint. 
