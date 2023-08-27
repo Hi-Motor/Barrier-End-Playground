@@ -11,7 +11,8 @@
         var cubicGraphics;
         var cubicPoints;
         var numCubicPoints;
-        var cubicHideSelect;
+        var onlyCurveSelect;
+        var hideLabelsSelect;
         var lockSelect;
         var freeControl;
 
@@ -52,7 +53,7 @@
             
             coordinateDraw(cubicPoints[3]);
             
-            if (!cubicHideSelect.checked) {
+            if (!onlyCurveSelect.checked) {
                 cubicGraphics.lineWidth = 1;
                 if (lockSelect.checked) {
                     cubicGraphics.strokeStyle = "#880000";
@@ -83,29 +84,33 @@
                         
                     }
                 }
-                cubicGraphics.font = "30px Arial";
-                cubicGraphics.fillStyle = "red";                
-                cubicGraphics.fillText("C(0,0)", C.x-90, C.y+5);
-                disk(cubicGraphics, C.x, C.y, 3)
-                cubicGraphics.fillText("E(1,1)", E.x+5, E.y-5);
-                disk(cubicGraphics, E.x, E.y, 3)
-                cubicGraphics.fillText("D(2,0)", D.x+5, D.y+5);
-                disk(cubicGraphics, D.x, D.y, 3)
-                cubicGraphics.font = "20px Arial";
-                cubicGraphics.fillStyle = "green";
-                cubicGraphics.fillText("P1", cubicPoints[1].x-30, cubicPoints[1].y)
-                cubicGraphics.fillText("P2", cubicPoints[2].x-30, cubicPoints[2].y+15)
-                cubicGraphics.fillText("P3", cubicPoints[4].x+15, cubicPoints[4].y+15)
-                cubicGraphics.fillText("P4", cubicPoints[5].x+30, cubicPoints[5].y)
+                cubicGraphics.fillStyle = "red"; 
+                disk(cubicGraphics, C.x, C.y, 6)
+                disk(cubicGraphics, E.x, E.y, 6)
+                disk(cubicGraphics, D.x, D.y, 6)
+                if (!hideLabelsSelect.checked) {
 
-                if (E.x==cubicPoints[3].x && E.y==cubicPoints[3].y){}
-                else{
+                    cubicGraphics.font = "30px Arial";
+                    cubicGraphics.fillStyle = "red";                
+                    cubicGraphics.fillText("C(0,0)", C.x-90, C.y+5);
+                    cubicGraphics.fillText("E(1,1)", E.x+5, E.y-5);
+                    cubicGraphics.fillText("D(2,0)", D.x+5, D.y+5);
                     cubicGraphics.font = "20px Arial";
-                    cubicGraphics.fillStyle = "blue";
-                    top_point_x=(cubicPoints[3].x-C.x)/(E.x-C.x);
-                    top_point_y=(cubicPoints[3].y-C.y)/(E.y-C.y);
-                    cubicGraphics.fillText("T("+top_point_x.toFixed(2)+","+top_point_y.toFixed(2)+")",
-                            cubicPoints[3].x-30, cubicPoints[3].y-10);
+                    cubicGraphics.fillStyle = "green";
+                    cubicGraphics.fillText("P1", cubicPoints[1].x-30, cubicPoints[1].y)
+                    cubicGraphics.fillText("P2", cubicPoints[2].x-30, cubicPoints[2].y+15)
+                    cubicGraphics.fillText("P3", cubicPoints[4].x+15, cubicPoints[4].y+15)
+                    cubicGraphics.fillText("P4", cubicPoints[5].x+30, cubicPoints[5].y)
+
+                    if (E.x==cubicPoints[3].x && E.y==cubicPoints[3].y){}
+                    else{
+                        cubicGraphics.font = "20px Arial";
+                        cubicGraphics.fillStyle = "blue";
+                        top_point_x=(cubicPoints[3].x-C.x)/(E.x-C.x);
+                        top_point_y=(cubicPoints[3].y-C.y)/(E.y-C.y);
+                        cubicGraphics.fillText("T("+top_point_x.toFixed(2)+","+top_point_y.toFixed(2)+")",
+                                cubicPoints[3].x-30, cubicPoints[3].y-10);
+                    }
                 }
 
                 
@@ -173,7 +178,7 @@
         }
 
         function doCubicMouseDown(evt) {
-            if (draggingCubic || cubicHideSelect.checked) {
+            if (draggingCubic || onlyCurveSelect.checked) {
                 return;
             }
             var r = cubicCanvas.getBoundingClientRect();
@@ -259,9 +264,13 @@
             freeControl.checked = false;
             freeControl.onclick = doLock;
 
-            cubicHideSelect = document.getElementById("cubicHide");
-            cubicHideSelect.checked = false;
-            cubicHideSelect.onclick = function () { cubicDraw();};
+            onlyCurveSelect = document.getElementById("onlyCurve");
+            onlyCurveSelect.checked = false;
+            onlyCurveSelect.onclick = function () { cubicDraw();};
+
+            hideLabelsSelect = document.getElementById("hideLabels");
+            hideLabelsSelect.checked = false;
+            hideLabelsSelect.onclick = function () { cubicDraw();};
 
             cubicPoints = [
                 new Point2D(C.x,C.y), 
@@ -397,8 +406,10 @@
             <label for="lock" style="margin-right:1cm">Lock Control Point Pairs</label>
         <input type="checkbox" id="free"> 
             <label for="free" style="margin-right:1cm">Complete Free Control Point</label>
-        <input type="checkbox" id="cubicHide"> 
-            <label for="cubicHide">Hide Controls</label>
+        <input type="checkbox" id="onlyCurve"> 
+            <label for="onlyCurve">Only Curve</label>
+        <input type="checkbox" id="hideLabels"> 
+            <label for="hideLabels">Hide Labels</label>
     </div>
     
     <p><br/></p>
