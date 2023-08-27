@@ -71,12 +71,16 @@
                         cubicGraphics.stroke();
                     }
                 }
+                
+                cubicGraphics.fillStyle = "black"; 
+                disk(cubicGraphics, C.x, C.y, 3)
+                disk(cubicGraphics, E.x, E.y, 3)
+                disk(cubicGraphics, D.x, D.y, 3)
 
-                // don't allow to move the first and the last point 
-                for (i = 1; i < numCubicPoints-1; i++) {
+                for (i = 0; i < numCubicPoints; i++) {
                     if (i % 3 == 0) {
-                        cubicGraphics.fillStyle = "black";
-                        disk(cubicGraphics, cubicPoints[i].x, cubicPoints[i].y, 5);
+                        cubicGraphics.fillStyle = "red";
+                        disk(cubicGraphics, cubicPoints[i].x, cubicPoints[i].y, 6);
                     }
                     else {
                         cubicGraphics.fillStyle = "green";
@@ -84,14 +88,11 @@
                         
                     }
                 }
-                cubicGraphics.fillStyle = "red"; 
-                disk(cubicGraphics, C.x, C.y, 6)
-                disk(cubicGraphics, E.x, E.y, 6)
-                disk(cubicGraphics, D.x, D.y, 6)
+
                 if (!hideLabelsSelect.checked) {
 
                     cubicGraphics.font = "30px Arial";
-                    cubicGraphics.fillStyle = "red";                
+                    cubicGraphics.fillStyle = "black";                
                     cubicGraphics.fillText("C(0,0)", C.x-90, C.y+5);
                     cubicGraphics.fillText("E(1,1)", E.x+5, E.y-5);
                     cubicGraphics.fillText("D(2,0)", D.x+5, D.y+5);
@@ -105,7 +106,7 @@
                     if (E.x==cubicPoints[3].x && E.y==cubicPoints[3].y){}
                     else{
                         cubicGraphics.font = "20px Arial";
-                        cubicGraphics.fillStyle = "blue";
+                        cubicGraphics.fillStyle = "red";
                         top_point_x=(cubicPoints[3].x-C.x)/(E.x-C.x);
                         top_point_y=(cubicPoints[3].y-C.y)/(E.y-C.y);
                         cubicGraphics.fillText("T("+top_point_x.toFixed(2)+","+top_point_y.toFixed(2)+")",
