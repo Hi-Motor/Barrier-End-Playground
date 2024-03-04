@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <!-- <meta http-equiv="refresh" content="1"> -->
     <title>Hi-Motor Barrier End playground </title>
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/Hi-Motor/Imagehost@main/ico/hi-motor_blue_oval/favicon.ico">
     <script type="text/javascript">
         "use strict";
         var cubicCanvas;
@@ -16,43 +17,43 @@
         var lockSelect;
         var freeControl;
 
-        var k,theta;
-        var p1,p2,p3,p4;
-        var top_point_x,top_point_y;
-        
-        var full_screen_x=600;
-        var full_screen_y=600;
-        var unit_x=full_screen_y/4;
-        var unit_y=full_screen_y/4;
-        var o_x=0;
-        var o_y=0
+        var k, theta;
+        var p1, p2, p3, p4;
+        var top_point_x, top_point_y;
+
+        var full_screen_x = 600;
+        var full_screen_y = 600;
+        var unit_x = full_screen_y / 4;
+        var unit_y = full_screen_y / 4;
+        var o_x = 0;
+        var o_y = 0
         function Point2D(x, y) {
-            this.x = x+o_x;
-            this.y = y+o_y;
+            this.x = x + o_x;
+            this.y = y + o_y;
         }
-        var C= new Point2D(unit_x, full_screen_y-unit_y);
-        var E= new Point2D(full_screen_x/2, unit_y);
-        var D= new Point2D(full_screen_x-unit_x, full_screen_y-unit_y);
+        var C = new Point2D(unit_x, full_screen_y - unit_y);
+        var E = new Point2D(full_screen_x / 2, unit_y);
+        var D = new Point2D(full_screen_x - unit_x, full_screen_y - unit_y);
         function updateVariable() {
-            document.getElementById("p1").innerText = "P1: ( 0.00 , "+
-                ((cubicPoints[1].y-C.y)/(E.y-C.y)).toFixed(2)+" )";
-            document.getElementById("p2").innerText = "P2: ( "+
-                (1-(cubicPoints[2].x-C.x)/(E.x-C.x)).toFixed(2)+" , 1.00 )";
-            document.getElementById("p3").innerText = "P3: ( "+
-                ((cubicPoints[4].x-C.x)/(E.x-C.x)-1).toFixed(2)+" , 1.00 )";
-            document.getElementById("p4").innerText = "P4: ( 2.00 , "+
-                ((cubicPoints[5].y-C.y)/(E.y-C.y)).toFixed(2)+" )";
-            document.getElementById("theta").innerText = "Theta: "+theta.toFixed(0)+" deg";
+            document.getElementById("p1").innerText = "P1: ( 0.00 , " +
+                ((cubicPoints[1].y - C.y) / (E.y - C.y)).toFixed(2) + " )";
+            document.getElementById("p2").innerText = "P2: ( " +
+                (1 - (cubicPoints[2].x - C.x) / (E.x - C.x)).toFixed(2) + " , 1.00 )";
+            document.getElementById("p3").innerText = "P3: ( " +
+                ((cubicPoints[4].x - C.x) / (E.x - C.x) - 1).toFixed(2) + " , 1.00 )";
+            document.getElementById("p4").innerText = "P4: ( 2.00 , " +
+                ((cubicPoints[5].y - C.y) / (E.y - C.y)).toFixed(2) + " )";
+            document.getElementById("theta").innerText = "Theta: " + theta.toFixed(0) + " deg";
         }
 
         function cubicDraw() {
-            
+
             var i;
             cubicGraphics.fillStyle = "white";
             cubicGraphics.fillRect(0, 0, full_screen_x, full_screen_y);
-            
+
             coordinateDraw(cubicPoints[3]);
-            
+
             if (!onlyCurveSelect.checked) {
                 cubicGraphics.lineWidth = 1;
                 if (lockSelect.checked) {
@@ -61,9 +62,9 @@
                 else {
                     cubicGraphics.strokeStyle = "#888888";
                 }
-                
+
                 // draw the control lines
-                for (i = 0; i < numCubicPoints-1; i++) {
+                for (i = 0; i < numCubicPoints - 1; i++) {
                     if (i % 3 != 1) {
                         cubicGraphics.beginPath();
                         cubicGraphics.moveTo(cubicPoints[i].x + .5, cubicPoints[i].y + .5);
@@ -71,8 +72,8 @@
                         cubicGraphics.stroke();
                     }
                 }
-                
-                cubicGraphics.fillStyle = "black"; 
+
+                cubicGraphics.fillStyle = "black";
                 disk(cubicGraphics, C.x, C.y, 3)
                 disk(cubicGraphics, E.x, E.y, 3)
                 disk(cubicGraphics, D.x, D.y, 3)
@@ -85,37 +86,37 @@
                     else {
                         cubicGraphics.fillStyle = "green";
                         cubicGraphics.fillRect(cubicPoints[i].x - 5, cubicPoints[i].y - 5, 10, 10);
-                        
+
                     }
                 }
 
                 if (!hideLabelsSelect.checked) {
 
                     cubicGraphics.font = "30px Arial";
-                    cubicGraphics.fillStyle = "black";                
-                    cubicGraphics.fillText("C(0,0)", C.x-90, C.y+5);
-                    cubicGraphics.fillText("E(1,1)", E.x+5, E.y-5);
-                    cubicGraphics.fillText("D(2,0)", D.x+5, D.y+5);
+                    cubicGraphics.fillStyle = "black";
+                    cubicGraphics.fillText("C(0,0)", C.x - 90, C.y + 5);
+                    cubicGraphics.fillText("E(1,1)", E.x + 5, E.y - 5);
+                    cubicGraphics.fillText("D(2,0)", D.x + 5, D.y + 5);
                     cubicGraphics.font = "20px Arial";
                     cubicGraphics.fillStyle = "green";
-                    cubicGraphics.fillText("P1", cubicPoints[1].x-30, cubicPoints[1].y)
-                    cubicGraphics.fillText("P2", cubicPoints[2].x-30, cubicPoints[2].y+15)
-                    cubicGraphics.fillText("P3", cubicPoints[4].x+15, cubicPoints[4].y+15)
-                    cubicGraphics.fillText("P4", cubicPoints[5].x+30, cubicPoints[5].y)
+                    cubicGraphics.fillText("P1", cubicPoints[1].x - 30, cubicPoints[1].y)
+                    cubicGraphics.fillText("P2", cubicPoints[2].x - 30, cubicPoints[2].y + 15)
+                    cubicGraphics.fillText("P3", cubicPoints[4].x + 15, cubicPoints[4].y + 15)
+                    cubicGraphics.fillText("P4", cubicPoints[5].x + 30, cubicPoints[5].y)
 
-                    if (E.x==cubicPoints[3].x && E.y==cubicPoints[3].y){}
-                    else{
+                    if (E.x == cubicPoints[3].x && E.y == cubicPoints[3].y) { }
+                    else {
                         cubicGraphics.font = "20px Arial";
                         cubicGraphics.fillStyle = "red";
-                        top_point_x=(cubicPoints[3].x-C.x)/(E.x-C.x);
-                        top_point_y=(cubicPoints[3].y-C.y)/(E.y-C.y);
-                        cubicGraphics.fillText("T("+top_point_x.toFixed(2)+","+top_point_y.toFixed(2)+")",
-                                cubicPoints[3].x-30, cubicPoints[3].y-10);
+                        top_point_x = (cubicPoints[3].x - C.x) / (E.x - C.x);
+                        top_point_y = (cubicPoints[3].y - C.y) / (E.y - C.y);
+                        cubicGraphics.fillText("T(" + top_point_x.toFixed(2) + "," + top_point_y.toFixed(2) + ")",
+                            cubicPoints[3].x - 30, cubicPoints[3].y - 10);
                     }
                 }
 
-                
-                
+
+
             }
             cubicGraphics.beginPath();
             cubicGraphics.moveTo(cubicPoints[0].x, cubicPoints[0].y);
@@ -125,37 +126,37 @@
                     cubicPoints[i + 2].x, cubicPoints[i + 2].y);
             }
             cubicGraphics.moveTo(C.x, C.y);
-            cubicGraphics.lineTo(C.x,full_screen_y)
-            cubicGraphics.lineTo(D.x,full_screen_y)
+            cubicGraphics.lineTo(C.x, full_screen_y)
+            cubicGraphics.lineTo(D.x, full_screen_y)
             cubicGraphics.lineTo(D.x, D.y);
             cubicGraphics.lineWidth = 2;
             cubicGraphics.strokeStyle = "black";
             cubicGraphics.stroke();
             cubicGraphics.fillStyle =
-            cubicGraphics.fillStyle = "hsla(0, 0%, 80%,0.2)";
+                cubicGraphics.fillStyle = "hsla(0, 0%, 80%,0.2)";
             cubicGraphics.fill();
         }
         // draw the coordinates
-        function coordinateDraw(top_point){
-            var point =C;
+        function coordinateDraw(top_point) {
+            var point = C;
             cubicGraphics.lineWidth = 1;
             cubicGraphics.strokeStyle = "red";
             cubicGraphics.setLineDash([5, 15])
             cubicGraphics.beginPath();
-            cubicGraphics.moveTo(0,point.y);
+            cubicGraphics.moveTo(0, point.y);
             cubicGraphics.lineTo(full_screen_x, point.y);
             cubicGraphics.moveTo(point.x, 0);
             cubicGraphics.lineTo(point.x, full_screen_y);
-            var point =D;
+            var point = D;
             cubicGraphics.moveTo(point.x, 0);
             cubicGraphics.lineTo(point.x, full_screen_y);
-            var point =top_point;
-            cubicGraphics.moveTo(0,point.y);
+            var point = top_point;
+            cubicGraphics.moveTo(0, point.y);
             cubicGraphics.lineTo(full_screen_x, point.y);
             cubicGraphics.stroke();
-            cubicGraphics.setLineDash([1,0])
+            cubicGraphics.setLineDash([1, 0])
         }
-        
+
         function disk(graphics, x, y, radius) {
             graphics.beginPath();
             graphics.arc(x, y, radius, 0, Math.PI * 2);
@@ -186,7 +187,7 @@
             var x = Math.round(evt.clientX - r.left);
             var y = Math.round(evt.clientY - r.top);
 
-            for (var i = numCubicPoints-1; i >= 0; i--) {
+            for (var i = numCubicPoints - 1; i >= 0; i--) {
                 var p = cubicPoints[i];
                 if (Math.abs(p.x - x) <= 5 && Math.abs(p.y - y) <= 5) {
                     draggingCubic = true;
@@ -200,7 +201,7 @@
             if (!draggingCubic) {
                 return;
             }
-            if (dragPointIndex == 0 || dragPointIndex == numCubicPoints-1) {
+            if (dragPointIndex == 0 || dragPointIndex == numCubicPoints - 1) {
                 return;
             }
             var r = cubicCanvas.getBoundingClientRect();
@@ -210,34 +211,34 @@
             var offsetY = y - cubicPoints[dragPointIndex].y;
             cubicPoints[dragPointIndex].x = x;
             cubicPoints[dragPointIndex].y = y;
-            k=(cubicPoints[4].y-cubicPoints[2].y)/(cubicPoints[4].x-cubicPoints[2].x)
-            theta=Math.atan(k)*180/Math.PI
-            
+            k = (cubicPoints[4].y - cubicPoints[2].y) / (cubicPoints[4].x - cubicPoints[2].x)
+            theta = Math.atan(k) * 180 / Math.PI
+
             if (dragPointIndex % 3 == 0) {
                 if (dragPointIndex > 0) {
                     cubicPoints[dragPointIndex - 1].x += offsetX;
                     cubicPoints[dragPointIndex - 1].y += offsetY;
                 }
-                if (dragPointIndex < numCubicPoints-1) {
+                if (dragPointIndex < numCubicPoints - 1) {
                     cubicPoints[dragPointIndex + 1].x += offsetX;
                     cubicPoints[dragPointIndex + 1].y += offsetY;
                 }
             }
-            else{
+            else {
                 if (!freeControl.checked) {
-                    cubicPoints[1].x=C.x;
-                    cubicPoints[5].x=D.x;
+                    cubicPoints[1].x = C.x;
+                    cubicPoints[5].x = D.x;
                     if (dragPointIndex == 2) {
-                        cubicPoints[4].y = cubicPoints[3].y +k*(cubicPoints[4].x- cubicPoints[3].x);
+                        cubicPoints[4].y = cubicPoints[3].y + k * (cubicPoints[4].x - cubicPoints[3].x);
                     }
                     else if (dragPointIndex == 4) {
-                        cubicPoints[2].y = cubicPoints[3].y +k*(cubicPoints[2].x- cubicPoints[3].x);
+                        cubicPoints[2].y = cubicPoints[3].y + k * (cubicPoints[2].x - cubicPoints[3].x);
                     }
-		   // else if (dragPointIndex == 3) {
-			// var rate =  (cubicPoints[3].y-C.y)/(E.y-C.y)
-                        // cubicPoints[1].y = C.y +rate*(cubicPoints[1].y- C.y);                        
-			// cubicPoints[5].y = D.y +rate*(cubicPoints[5].y- D.y);
-                   // }
+                    // else if (dragPointIndex == 3) {
+                    // var rate =  (cubicPoints[3].y-C.y)/(E.y-C.y)
+                    // cubicPoints[1].y = C.y +rate*(cubicPoints[1].y- C.y);                        
+                    // cubicPoints[5].y = D.y +rate*(cubicPoints[5].y- D.y);
+                    // }
                 }
                 if (lockSelect.checked) {
                     if (dragPointIndex == 2) {
@@ -268,33 +269,33 @@
             lockSelect.checked = false;
             lockSelect.onclick = doLock;
 
-            freeControl= document.getElementById("free");
+            freeControl = document.getElementById("free");
             freeControl.checked = false;
             freeControl.onclick = doLock;
 
             onlyCurveSelect = document.getElementById("onlyCurve");
             onlyCurveSelect.checked = false;
-            onlyCurveSelect.onclick = function () { cubicDraw();};
+            onlyCurveSelect.onclick = function () { cubicDraw(); };
 
             hideLabelsSelect = document.getElementById("hideLabels");
             hideLabelsSelect.checked = false;
-            hideLabelsSelect.onclick = function () { cubicDraw();};
+            hideLabelsSelect.onclick = function () { cubicDraw(); };
 
             cubicPoints = [
-                new Point2D(C.x,C.y), 
-                new Point2D(unit_x, full_screen_y/2),
+                new Point2D(C.x, C.y),
+                new Point2D(unit_x, full_screen_y / 2),
 
-                new Point2D(full_screen_x/2-unit_x, unit_y),
-                new Point2D(E.x,E.y), 
-                new Point2D(full_screen_x/2+unit_x, unit_y),
+                new Point2D(full_screen_x / 2 - unit_x, unit_y),
+                new Point2D(E.x, E.y),
+                new Point2D(full_screen_x / 2 + unit_x, unit_y),
 
-                new Point2D(full_screen_x-unit_x, full_screen_y/2), 
-                new Point2D(D.x,D.y),
+                new Point2D(full_screen_x - unit_x, full_screen_y / 2),
+                new Point2D(D.x, D.y),
 
             ];
             numCubicPoints = cubicPoints.length;
-            k=(cubicPoints[4].y-cubicPoints[2].y)/(cubicPoints[4].x-cubicPoints[2].x)
-            theta=Math.atan(k)*180/Math.PI
+            k = (cubicPoints[4].y - cubicPoints[2].y) / (cubicPoints[4].x - cubicPoints[2].x)
+            theta = Math.atan(k) * 180 / Math.PI
 
             cubicDraw();
 
@@ -333,17 +334,17 @@
             right: 0;
             bottom: 0;
         }
-        
+
         div {
             text-align: center;
         }
 
-         canvas {
-			display: block;
-			margin: 0 auto;
+        canvas {
+            display: block;
+            margin: 0 auto;
             background-color: white;
             border: thin solid black;
-        } 
+        }
 
         a {
             text-decoration: none;
@@ -389,39 +390,39 @@
     <![endif]-->
 
     <h1><a href="https://hi-motor.site">Hi-Motor</a> Barrier End Playground</h1>
-    
-    <p><br/></p>
 
-    <p>Hi-Motor Barrier End Playground is for designers and developers exploring 
+    <br />
+
+    <p>Hi-Motor Barrier End Playground is for designers and developers exploring
         the potential of B-Spline in motor barrier design.<br>
-        
+
         Each segment is defined by its two endpoints and two control points.
-        A control point determines the tangent at the corresponding endpoint. 
+        A control point determines the tangent at the corresponding endpoint.
         You can drag the endpoints and the control points (fixed on the axis by default). <br>
 
-        If "Lock Control Point Pairs" is specified, then the two control points 
-        associated with the endpoint where two segments join are constrained to 
+        If "Lock Control Point Pairs" is specified, then the two control points
+        associated with the endpoint where two segments join are constrained to
         move together, resulting in a smooth curve.<br>
 
-        If "Lock Control Point Pairs" is specified,then you can drag the control 
+        If "Lock Control Point Pairs" is specified,then you can drag the control
         freely. <br>
     </p>
 
-    <p><br/></p>
+    <br />
 
     <div style="font-weight: bold">
-        <input type="checkbox" id="lock"> 
-            <label for="lock" style="margin-right:1cm">Lock Control Point Pairs</label>
-        <input type="checkbox" id="free"> 
-            <label for="free" style="margin-right:1cm">Complete Free Control Point</label>
-        <input type="checkbox" id="onlyCurve"> 
-            <label for="onlyCurve">Only Curve</label>
-        <input type="checkbox" id="hideLabels"> 
-            <label for="hideLabels">Hide Labels</label>
+        <input type="checkbox" id="lock">
+        <label for="lock" style="margin-right:1cm">Lock Control Point Pairs</label>
+        <input type="checkbox" id="free">
+        <label for="free" style="margin-right:1cm">Complete Free Control Point</label>
+        <input type="checkbox" id="onlyCurve">
+        <label for="onlyCurve">Only Curve</label>
+        <input type="checkbox" id="hideLabels">
+        <label for="hideLabels">Hide Labels</label>
     </div>
-    
-    <p><br/></p>
-    
+
+    <br />
+
     <div style="font-weight: bold">
         <span id="p1" style="margin-right:1cm">
             <label for="p1">P1</label>
@@ -440,17 +441,23 @@
         </span>
     </div>
 
-    <p><br/></p>
+    <br />
 
     <canvas width="600" height="600" id="cubic"></canvas>
+    <br />
 
 
-    <p><br/></p>
-    
     <div style="font-weight: bold">
         Modified from <a href="https://math.hws.edu/eck/cs424/notes2013/canvas/bezier.html">Hamilton College CS424
             NOTES2013</a>
-        </div>
+    </div>
+    <br />
+
+    <div>
+        <a href="https://github.com/Hi-Motor/Barrier-End-Playground">
+            <img src="img/github.svg" width="40" />
+        </a>
+    </div>
 </body>
 
 </html>
